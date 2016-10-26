@@ -1,0 +1,37 @@
+{
+  "name": "templatemonster/ldap-auth",
+  "description": "Yii2 module for mapping ldap to rbac.",
+  "keywords": [
+    "auth",
+    "microservice",
+    "ldap",
+    "rbac"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrey Vanda",
+      "email": "andreyv@templatemonster.me"
+    },
+    {
+      "name": "Denis Horobtsov",
+      "email": "denish@templatemonster.me"
+    }
+  ],
+  "repositories":[
+    {
+      "type":"git",
+      "url":"https://github.com/M0nsterLabs/yii2-migration-aware-module"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "*",
+    "templatemonster/yii2-migration-aware-module" : "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "templatemonster\\ldapauth\\": "src/ldap"
+    }
+  }
+}
