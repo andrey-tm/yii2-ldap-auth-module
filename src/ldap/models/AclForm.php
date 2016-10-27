@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+use templatemonster\ldapauth\Module;
+use templatemonster\ldapauth\services\LdapAuth;
 
 class AclForm extends Model
 {
@@ -28,6 +30,17 @@ class AclForm extends Model
      * @var Acl
      */
     private $model;
+
+    /**
+     * @var LdapAuth
+     */
+    private $ldapAuth;
+
+    public function init()
+    {
+        parent::init();
+        $this->ldapAuth = Module::getInstance()->ldapAuth;
+    }
 
     /**
      * @inheritdoc
@@ -91,11 +104,7 @@ class AclForm extends Model
             $auth = Yii::$app->ldapGroupsManager;
             $auth->revokeAll($model->getId());
 
-            if ($this->roles && is_array($this->roles)) {
-                foreach ($this->roles as $role) {
-                    $auth->assign($auth->getRole($role), $model->getId());
-                }
-            }
+            $this->ldapAuth->assignRoles($this->roles, $auth, $model->getId());
             return !$model->hasErrors();
         }
 

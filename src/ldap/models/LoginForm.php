@@ -7,7 +7,7 @@ use yii\web\ForbiddenHttpException;
 use cheatsheet\Time;
 use common\models\User;
 use backend\models\UserForm;
-use templatemonster\ldapauth\models\AclForm;
+use templatemonster\ldapauth\Module;
 use templatemonster\ldapauth\services\LdapAuth;
 
 class LoginForm extends Model
@@ -40,7 +40,7 @@ class LoginForm extends Model
     public function init()
     {
         parent::init();
-        $this->ldapAuth = \templatemonster\ldapauth\Module::getInstance()->ldapAuth;
+        $this->ldapAuth = Module::getInstance()->ldapAuth;
     }
 
 

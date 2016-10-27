@@ -49,4 +49,13 @@ interface LdapAuthInterface
      * @param ManagerInterface $auth
      */
     public function syncRbacRoles(User $user, AclForm $aclForm, ManagerInterface $auth);
+
+    /**
+     * Assign Roles using given Manager
+     *
+     * @param array $roles
+     * @param ManagerInterface $auth
+     * @param int $id
+     */
+    public function assignRoles($roles, ManagerInterface $auth, $id);
 }

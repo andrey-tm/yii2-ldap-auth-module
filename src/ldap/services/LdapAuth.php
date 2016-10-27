@@ -106,26 +106,21 @@ class LdapAuth extends Component implements LdapAuthInterface
         $userGroups = $this->getGroupsOfUser($user->username);
         foreach ($userGroups as $group) {
             if ($acl = Acl::findOne(['ldap_group' => $group])) {
-                $this->assignRoles($acl, $aclForm, $auth, $user->id);
+                $aclForm->setModel($acl);
+                $this->assignRoles($aclForm->roles, $auth, $user->id);
             }
         }
     }
 
     /**
-     * Assign Roles to user
-     *
-     * @param Acl $acl
-     * @param AclForm $aclForm
-     * @param ManagerInterface $auth
-     * @param int $userId
+     * @inheritdoc
      */
-    private function assignRoles(Acl $acl, AclForm $aclForm, ManagerInterface $auth, $userId)
+    public function assignRoles($roles, ManagerInterface $auth, $id)
     {
-        $aclForm->setModel($acl);
-        if (is_array($aclForm->roles)) {
-            foreach ($aclForm->roles as $role) {
-                $auth->revoke($auth->getRole($role), $userId);
-                $auth->assign($auth->getRole($role), $userId);
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                $auth->revoke($auth->getRole($role), $id);
+                $auth->assign($auth->getRole($role), $id);
             }
         }
     }
